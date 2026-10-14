@@ -1,0 +1,13 @@
+<div>
+  <h1>{{ producto.title }}</h1>
+  <img [src]="producto.images[0]" [alt]="producto.title">
+  <p>{{ producto.price }}</p>
+  <p *ngIf="producto.stock === 0" class="insignia">Agotado </p>
+  <p>{{ producto.category.name }}</p>
+  <button
+    *ngIf="producto.stock > 0"
+    (click)="agregarAlCarrito.emit(producto)"
+  >
+    Agregar al carrito
+  </button>
+</div>

@@ -1,0 +1,33 @@
+
+<button (click)="cambiarRol()">Cambiar rol</button>
+
+<div [ngSwitch]="rol()">
+  <app-tabla-productos
+    *ngSwitchCase="'admin'"
+    [productos]="productosFiltrados()"
+  />
+  <ng-container *ngSwitchCase="'customer'"> 
+    <div class="grilla"><app-tarjeta-producto
+      *ngFor="let producto of productosFiltrados(); trackBy: trackById"
+      [producto]="producto"
+      (agregarAlCarrito)="agregarProducto($event)"
+    />
+    </div>
+    <p>Items: {{ cantidadProductos() }}</p>
+    <p>Total: {{ totalCarrito() }}</p>
+    <p *ngIf="productosFiltrados().length === 0">
+     No hay productos para mostrar
+    </p>
+  </ng-container>
+</div>
+
+<label for="categorias">Elige una categoria:</label>
+<select
+  id="categorias"
+  name="categorias"
+  (change)="categoriaSeleccionada.set($any($event.target).value === '' ? null : +$any($event.target).value)"
+>
+  <option value="">Todas las categorias</option>
+  <option value="1020">Tecnologia</option>
+  <option value="1030">Belleza</option>
+</select>
