@@ -1,6 +1,6 @@
 <button (click)="cambiarRol()">Cambiar rol</button>
 
-<div [ngSwitch]="rol()" *ngIf="productos$ | async as productos">
+<div [ngSwitch]="rol()" *ngIf="productos$ | async as productos; else cargando">
   <app-tabla-productos
     *ngSwitchCase="'admin'"
     [productos]="productos"
@@ -19,14 +19,18 @@
     </p>
   </ng-container>
 </div>
+<ng-template #cargando>
+  <p>Cargando productos...</p>
+</ng-template>
 
 <label for="categorias">Elige una categoria:</label>
 <select
   id="categorias"
   name="categorias"
-  (change)="categoriaSeleccionada.set($any($event.target).value === '' ? null : +$any($event.target).value)"
+  (change)="cambiarCategoria($any($event.target).value === '' ? null : +$any($event.target).value)"
 >
-  <option value="">Todas las categorias</option>
-  <option value="1020">Tecnologia</option>
-  <option value="1030">Belleza</option>
+<option value ="">Todas las categorias</option>
+  <option *ngFor="let categoria of categorias$ | async" [value]="categoria.id">
+  {{ categoria.name }}
+</option>
 </select>

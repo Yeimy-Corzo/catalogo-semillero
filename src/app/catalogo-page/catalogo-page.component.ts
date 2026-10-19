@@ -1,11 +1,11 @@
-import { Component, signal, computed, inject } from '@angular/core';
-import { productos} from '../models/productos';
+import { Component, signal, inject } from '@angular/core';
 import { Producto } from '../models/producto';
 import { CommonModule } from '@angular/common';
 import { TablaProductosComponent } from '../tabla-productos/tabla-productos.component';
 import { TarjetaProductoComponent } from '../tarjeta-producto/tarjeta-producto.component';
 import { ProductoService } from '../services/producto.service';
 import { CategoriaService } from '../services/categoria.service';
+import { CarritoService } from '../services/carrito.service';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -21,8 +21,8 @@ export class CatalogoPageComponent {
   private categoriaService = inject(CategoriaService);
   categorias$ = this.categoriaService.obtenerTodas();
 
-  productos = signal(productos);
-  carrito = signal<Producto[]>([]);
+  private carritoService = inject(CarritoService);
+
   rol = signal<'admin' | 'customer'>('customer');
 
   cambiarRol() {
@@ -31,33 +31,24 @@ export class CatalogoPageComponent {
     );
   }
 
+  cambiarCategoria(id: number | null) {
+    if (id) {
+      this.productos$ = this.productoService.obtenerPorCategoria(id);
+    } else {
+      this.productos$ = this.productoService.obtenerTodos();
+    }
+  }
+
   agregarProducto(producto: Producto) {
-    this.carrito.update(carritoActual => [
-      ...carritoActual,
-      producto
-    ]);
+    this.carritoService.agregar(producto);
   }
 
-  cantidadProductos = computed(() => this.carrito().length);
-  totalCarrito = computed(() =>
-  this.carrito().reduce((total, producto) => total + producto.price, 0)
+  cantidadProductos = this.carritoService.cantidad;
+  totalCarrito = this.carritoService.total;
 
-);
-categoriaSeleccionada = signal<number | null>(null); 
-productosFiltrados = computed(() => {
-  const categoria = this.categoriaSeleccionada();
-
-  if (categoria === null) {
-    return this.productos();
+  trackById(index: number, producto: Producto): number {
+    return producto.id;
   }
-
-  return this.productos().filter(
-    producto => producto.category.id === categoria
-  );
-});
-trackById(index: number, producto: Producto): number {
-  return producto.id;
-}
 }
 
 
