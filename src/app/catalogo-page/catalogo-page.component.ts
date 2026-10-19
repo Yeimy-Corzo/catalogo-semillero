@@ -17,6 +17,8 @@ import { CarritoService } from '../services/carrito.service';
 export class CatalogoPageComponent {
   private productoService = inject(ProductoService);
   productos$ = this.productoService.obtenerTodos();
+  errorCarga = this.productoService.errorCarga; 
+  errorGuardado = this.productoService.errorGuardado; 
 
   private categoriaService = inject(CategoriaService);
   categorias$ = this.categoriaService.obtenerTodas();

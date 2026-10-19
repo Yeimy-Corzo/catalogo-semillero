@@ -1,4 +1,6 @@
 <button (click)="cambiarRol()">Cambiar rol</button>
+<p *ngIf="errorCarga()">{{ errorCarga()}}</p>
+<p *ngIf="errorGuardado()">{{ errorGuardado()}}</p>
 
 <div [ngSwitch]="rol()" *ngIf="productos$ | async as productos; else cargando">
   <app-tabla-productos
@@ -14,8 +16,7 @@
     </div>
     <p>Items: {{ cantidadProductos() }}</p>
     <p>Total: {{ totalCarrito() }}</p>
-    <p *ngIf="productos.length === 0">
-     No hay productos para mostrar
+    <p *ngIf="productos.length === 0"> No hay productos para mostrar
     </p>
   </ng-container>
 </div>
