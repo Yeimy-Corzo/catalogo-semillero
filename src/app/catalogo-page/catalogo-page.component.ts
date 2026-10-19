@@ -1,9 +1,11 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { productos} from '../models/productos';
 import { Producto } from '../models/producto';
 import { CommonModule } from '@angular/common';
 import { TablaProductosComponent } from '../tabla-productos/tabla-productos.component';
 import { TarjetaProductoComponent } from '../tarjeta-producto/tarjeta-producto.component';
+import { ProductoService } from '../services/producto.service';
+import { CategoriaService } from '../services/categoria.service';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -13,6 +15,12 @@ import { TarjetaProductoComponent } from '../tarjeta-producto/tarjeta-producto.c
   styleUrl: './catalogo-page.component.css'
 })
 export class CatalogoPageComponent {
+  private productoService = inject(ProductoService);
+  productos$ = this.productoService.obtenerTodos();
+
+  private categoriaService = inject(CategoriaService);
+  categorias$ = this.categoriaService.obtenerTodas();
+
   productos = signal(productos);
   carrito = signal<Producto[]>([]);
   rol = signal<'admin' | 'customer'>('customer');

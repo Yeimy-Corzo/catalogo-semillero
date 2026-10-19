@@ -1,21 +1,20 @@
-
 <button (click)="cambiarRol()">Cambiar rol</button>
 
-<div [ngSwitch]="rol()">
+<div [ngSwitch]="rol()" *ngIf="productos$ | async as productos">
   <app-tabla-productos
     *ngSwitchCase="'admin'"
-    [productos]="productosFiltrados()"
+    [productos]="productos"
   />
   <ng-container *ngSwitchCase="'customer'"> 
     <div class="grilla"><app-tarjeta-producto
-      *ngFor="let producto of productosFiltrados(); trackBy: trackById"
+      *ngFor="let producto of productos; trackBy: trackById"
       [producto]="producto"
       (agregarAlCarrito)="agregarProducto($event)"
     />
     </div>
     <p>Items: {{ cantidadProductos() }}</p>
     <p>Total: {{ totalCarrito() }}</p>
-    <p *ngIf="productosFiltrados().length === 0">
+    <p *ngIf="productos.length === 0">
      No hay productos para mostrar
     </p>
   </ng-container>
