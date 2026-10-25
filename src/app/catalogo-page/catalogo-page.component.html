@@ -30,8 +30,8 @@
   name="categorias"
   (change)="cambiarCategoria($any($event.target).value === '' ? null : +$any($event.target).value)"
 >
-<option value ="">Todas las categorias</option>
-  <option *ngFor="let categoria of categorias$ | async" [value]="categoria.id">
+<option value ="" [selected]="(categoriaActual$ | async) === 0" >Todas las categorias</option>
+  <option *ngFor="let categoria of categorias$ | async" [value]="categoria.id" [selected]="categoria.id === (categoriaActual$ | async)">
   {{ categoria.name }}
 </option>
 </select>

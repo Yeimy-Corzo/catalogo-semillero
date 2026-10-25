@@ -1,0 +1,7 @@
+
+<nav>
+<a routerLink="/productos" routerLinkActive="activo">Catalogo</a>
+<a *ngIf="auth.estaAutenticado()" routerLink="/carrito" routerLinkActive="activo">Carrito</a>
+<a routerLink="/login" routerLinkActive="activo">Login</a>
+<a *ngIf="auth.tieneRol('admin')" routerLink="/admin/productos" routerLinkActive="activo">Admin</a>
+</nav>
