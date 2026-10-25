@@ -6,6 +6,8 @@ import { TarjetaProductoComponent } from '../tarjeta-producto/tarjeta-producto.c
 import { ProductoService } from '../services/producto.service';
 import { CategoriaService } from '../services/categoria.service';
 import { CarritoService } from '../services/carrito.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, map } from 'rxjs';
 
 @Component({
   selector: 'app-catalogo-page',
@@ -16,9 +18,26 @@ import { CarritoService } from '../services/carrito.service';
 })
 export class CatalogoPageComponent {
   private productoService = inject(ProductoService);
-  productos$ = this.productoService.obtenerTodos();
   errorCarga = this.productoService.errorCarga; 
   errorGuardado = this.productoService.errorGuardado; 
+
+  private ruta = inject(ActivatedRoute);
+
+  categoriaActual$ = this.ruta.queryParamMap.pipe(
+  map(params => Number(params.get('categoria')))
+  );
+
+  productos$ = this.ruta.queryParamMap.pipe(
+  switchMap(params => {
+    const id = Number(params.get('categoria'));
+    if (id) {
+      return this.productoService.obtenerPorCategoria(id);
+    } else {
+      return this.productoService.obtenerTodos();
+    }
+  })
+  );
+  private router = inject(Router);
 
   private categoriaService = inject(CategoriaService);
   categorias$ = this.categoriaService.obtenerTodas();
@@ -34,11 +53,7 @@ export class CatalogoPageComponent {
   }
 
   cambiarCategoria(id: number | null) {
-    if (id) {
-      this.productos$ = this.productoService.obtenerPorCategoria(id);
-    } else {
-      this.productos$ = this.productoService.obtenerTodos();
-    }
+  this.router.navigate([], { queryParams: { categoria: id }, queryParamsHandling: 'merge' });
   }
 
   agregarProducto(producto: Producto) {

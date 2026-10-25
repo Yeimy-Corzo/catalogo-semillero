@@ -1,0 +1,18 @@
+
+<p *ngIf="errorCarga()">{{ errorCarga() }}</p>
+<div *ngIf="producto$ | async as producto; else cargando">
+  <h2>{{ producto.title }}</h2>
+  <p>{{ producto.description }}</p>
+  <p>Precio: {{ producto.price }}</p>
+</div>
+
+<ng-template #cargando>
+  <p *ngIf="!errorCarga()">Cargando producto...</p>
+</ng-template>
+
+<h3>Productos relacionados</h3>
+<ul *ngIf="productosRelacionados$ | async as relacionados">
+  <li *ngFor="let p of relacionados | slice:0:5">
+    <a [routerLink]="['/productos', p.id]">{{ p.title }}</a>
+  </li>
+</ul>

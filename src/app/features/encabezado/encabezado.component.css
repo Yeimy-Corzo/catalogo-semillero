@@ -1,0 +1,8 @@
+.activo {
+  font-weight: bold;
+  color: #d63384;
+  text-decoration: underline;
+}
+nav a {
+  margin-right: 16px;
+}
