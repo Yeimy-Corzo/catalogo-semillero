@@ -6,8 +6,6 @@ import { authGuard } from "./guards/auth.guard"
 import { adminGuard } from "./guards/admin.guard"
 
 
-
-
 export const routes: Routes = [
     {path: '', redirectTo: 'productos', pathMatch: 'full' },
     {path: 'productos', component: 	CatalogoPageComponent, title: 'Catalogo'},
@@ -16,5 +14,4 @@ export const routes: Routes = [
     {path: 'carrito', title: 'Mi carrito', canActivate: [authGuard], loadComponent: () => import('./features/carrito-page/carrito-page.component').then(m => m.CarritoPageComponent),},
     {path: 'admin', title:'Admin', canMatch: [adminGuard], loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES),},
     {path: '**', component: NoEncontradoComponent, title: 'Pagina no encontrada'},
-
 ]
