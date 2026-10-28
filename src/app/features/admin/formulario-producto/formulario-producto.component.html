@@ -1,0 +1,150 @@
+<form #formularioElement [formGroup]="formularioProducto" (ngSubmit)="guardar()">
+
+  <div>
+    <label for="codigo">Codigo</label>
+    <input id="codigo" type="number" formControlName="codigo">
+  </div>
+
+  <div>
+    <label for="titulo">Titulo</label>
+    <input
+      id="titulo"
+      type="text"
+      formControlName="titulo">
+
+    <div
+      *ngIf="
+        formularioProducto.controls.titulo.touched &&
+        formularioProducto.controls.titulo.errors">
+
+      <small *ngIf="formularioProducto.controls.titulo.hasError('required')">
+        El titulo es obligatorio.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.titulo.hasError('minlength')">
+        El titulo debe tener minimo 3 caracteres.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.titulo.hasError('maxlength')">
+        El titulo admite maximo 100 caracteres.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.titulo.hasError('soloEspacios')">
+        El titulo no puede contener solo espacios.
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="precio">Precio</label>
+    <input
+      id="precio"
+      type="number"
+      formControlName="precio">
+
+    <div *ngIf="formularioProducto.controls.precio.touched">
+      <small *ngIf="formularioProducto.controls.precio.hasError('required')">
+        El precio es obligatorio.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.precio.hasError('min')">
+        El precio debe ser mayor que 0.
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="descripcion">Descripcion</label>
+    <textarea
+      id="descripcion"
+      formControlName="descripcion"
+    ></textarea>
+
+    <p>Caracteres restantes: {{ caracteresRestantes }}</p>
+
+    <div *ngIf="formularioProducto.controls.descripcion.touched">
+      <small *ngIf="formularioProducto.controls.descripcion.hasError('required')">
+        La descripcion es obligatoria.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.descripcion.hasError('minlength')">
+        La descripcion debe tener minimo 20 caracteres.
+      </small>
+
+      <small *ngIf="formularioProducto.controls.descripcion.hasError('maxlength')">
+        La descripcion admite maximo 500 caracteres.
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="categoriaId">Categoria</label>
+
+    <select
+      id="categoriaId"
+      formControlName="categoriaId"
+    >
+      <option [ngValue]="0">Selecciona una categoria</option>
+
+      <option
+        *ngFor="let categoria of categorias$ | async"
+        [ngValue]="categoria.id"
+      >
+        {{ categoria.name }}
+      </option>
+    </select>
+
+    <small
+      *ngIf="
+        formularioProducto.controls.categoriaId.touched &&
+        formularioProducto.controls.categoriaId.invalid
+      "
+    >
+      Debes seleccionar una categoria.
+    </small>
+  </div>
+
+  <div formArrayName="imagenes">
+    <h3>Imagenes del producto</h3>
+
+    <div
+      *ngFor="let imagen of imagenes.controls; let i = index"
+    >
+      <label [for]="'imagen-' + i">
+        URL de la imagen {{ i + 1 }}
+      </label>
+
+      <input
+        [id]="'imagen-' + i"
+        type="url"
+        [formControlName]="i"
+      >
+      <small *ngIf="imagen.touched && imagen.hasError('required')">
+        La URL de la imagen es obligatoria.
+      </small>
+
+      <button
+        type="button"
+        (click)="quitarImagen(i)"
+        [disabled]="imagenes.length === 1">
+        Quitar imagen
+      </button>
+    </div>
+
+    <button
+      type="button"
+      (click)="agregarImagen()"
+    >
+      Agregar imagen
+    </button>
+  </div>
+
+  <p *ngIf="error()" class="error-guardado">{{ error() }}</p>
+
+  <div>
+    <button type="submit" [disabled]="guardando()">
+      {{ guardando() ? 'Guardando...' : 'Guardar producto' }}
+    </button>
+  </div>
+
+</form>
