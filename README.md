@@ -40,3 +40,7 @@ Rama `frontend-03`
 - `adminGuard` protege `/admin` con `canMatch`: si el usuario no es admin, el chunk de admin no se descarga y se redirige a `/productos`
 - el menu oculta los enlaces "Admin" y "Carrito" a quien no tiene acceso, ocultar no reemplaza a los guards, hacen falta los dos
 - el panel de admin tiene un formulario que avisa antes de salir si hay cambios sin guardar (`CanDeactivate`)
+
+## Taller 04
+Rama `frontend-04`
+- 

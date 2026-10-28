@@ -1,4 +1,3 @@
-
 <p *ngIf="errorCarga()">{{ errorCarga() }}</p>
 <div *ngIf="producto$ | async as producto; else cargando">
   <h2>{{ producto.title }}</h2>

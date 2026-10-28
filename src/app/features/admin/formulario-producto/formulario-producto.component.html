@@ -1,8 +1,12 @@
 
 <form #formularioElement [formGroup]="formularioProducto" (ngSubmit)="guardar()">
+  <div>
+  <label for="codigo">Código</label>
+  <input id="codigo" type="number" formControlName="codigo">
+  </div>
 
   <div>
-    <label for="titulo">Título</label>
+    <label for="titulo">Titulo</label>
     <input
       id="titulo"
       type="text"
@@ -99,7 +103,7 @@
   </div>
 
   <div formArrayName="imagenes">
-    <h3>Imágenes del producto</h3>
+    <h3>Imagenes del producto</h3>
 
     <div
       *ngFor="let imagen of imagenes.controls; let i = index"
@@ -127,12 +131,9 @@
     >
       Agregar imagen
     </button>
-  </div>
-
-  <div>
-    <button type="submit">
-      Guardar producto
-    </button>
-  </div>
-
+  </div> <p *ngIf="error()" class="error-guardado">{{ error() }}</p> <div>
+  <button type="submit" [disabled]="guardando()">
+    {{ guardando() ? 'Guardando…' : 'Guardar producto' }}
+  </button>
+</div>
 </form>

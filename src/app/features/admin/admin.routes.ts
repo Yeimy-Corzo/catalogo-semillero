@@ -5,10 +5,12 @@ import { AdminUsuariosComponent } from './admin-usuarios/admin-usuarios.componen
 import { cambiosSinGuardarGuard } from '../../guards/cambios-sin-guardar.guard';
 import { FormularioProductoComponent } from './formulario-producto/formulario-producto.component';
 
+
 export const ADMIN_ROUTES: Routes = [
   { path: '', component: AdminLayoutComponent, children: [
     { path: 'usuarios', component: AdminUsuariosComponent },
-    { path: 'productos', component: AdminProductosComponent, canDeactivate: [cambiosSinGuardarGuard] },
-    {path: 'productos/nuevo', component: FormularioProductoComponent, title: 'Nuevo producto' },
+    { path: 'productos', component: AdminProductosComponent, canDeactivate: [cambiosSinGuardarGuard]},
+    {path: 'productos/nuevo', component: FormularioProductoComponent, title: 'Nuevo producto'},
+    { path: 'productos/:id/editar', component: FormularioProductoComponent, title: 'Editar producto', canDeactivate: [cambiosSinGuardarGuard] },
   ]},
 ];
