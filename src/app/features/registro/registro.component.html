@@ -1,0 +1,68 @@
+<form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+
+  <div>
+    <label for="nombre">Nombre</label>
+    <input id="nombre" type="text" formControlName="nombre">
+    <div *ngIf="formularioRegistro.controls.nombre.touched">
+      <small *ngIf="formularioRegistro.controls.nombre.hasError('required')">
+        El nombre es obligatorio.
+      </small>
+      <small *ngIf="formularioRegistro.controls.nombre.hasError('minlength')">
+        El nombre debe tener minimo 3 caracteres.
+      </small>
+      <small *ngIf="formularioRegistro.controls.nombre.hasError('soloEspacios')">
+        El nombre no puede contener solo espacios.
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="correo">Correo</label>
+    <input id="correo" type="email" formControlName="correo">
+    <div *ngIf="formularioRegistro.controls.correo.touched">
+      <small *ngIf="formularioRegistro.controls.correo.hasError('required')">
+        El correo es obligatorio.
+      </small>
+      <small *ngIf="formularioRegistro.controls.correo.hasError('email')">
+        El formato del correo no es valido.
+      </small>
+      <small *ngIf="formularioRegistro.controls.correo.hasError('correoEnUso')">
+        Este correo ya esta registrado.
+      </small>
+    </div>
+    <small *ngIf="formularioRegistro.controls.correo.pending">
+      Verificando correo...
+    </small>
+  </div>
+
+  <div>
+    <label for="clave">Clave</label>
+    <input id="clave" type="password" formControlName="clave">
+    <div *ngIf="formularioRegistro.controls.clave.touched">
+      <small *ngIf="formularioRegistro.controls.clave.hasError('required')">
+        La clave es obligatoria.
+      </small>
+      <small *ngIf="formularioRegistro.controls.clave.hasError('minlength')">
+        La clave debe tener minimo 8 caracteres.
+      </small>
+      <small *ngIf="formularioRegistro.controls.clave.hasError('pattern')">
+        La clave debe tener al menos una letra y un numero.
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="confirmacion">Confirmar clave</label>
+    <input id="confirmacion" type="password" formControlName="confirmacion">
+    <div *ngIf="formularioRegistro.controls.confirmacion.touched">
+      <small *ngIf="formularioRegistro.controls.confirmacion.hasError('required')">
+        Debes confirmar la clave.
+      </small>
+      <small *ngIf="formularioRegistro.hasError('clavesDistintas')">
+        Las claves no coinciden.
+      </small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="formularioRegistro.pending">Registrarme</button>
+</form>

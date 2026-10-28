@@ -6,6 +6,7 @@ import { ProductoService } from '../../../services/producto.service';
 import { Router } from '@angular/router';
 import { PuedeSalir } from '../../../guards/cambios-sin-guardar.guard';
 import { ActivatedRoute } from '@angular/router';
+import { noSoloEspacios } from '../../../validators/espacios.validator';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class FormularioProductoComponent implements OnInit, PuedeSalir {
 
   formularioProducto = this.fb.nonNullable.group({
     codigo: [{ value: 0, disabled: true }],
-    titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(/.*\S.*/)]],
+    titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), noSoloEspacios]],
     precio: [0, [Validators.required, Validators.min(1),]],
     descripcion: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(500)]],
     imagenes: this.fb.array([this.nuevaImagen()]),

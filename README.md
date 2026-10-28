@@ -43,4 +43,13 @@ Rama `frontend-03`
 
 ## Taller 04
 Rama `frontend-04`
-- 
+- todos los formularios son reactivos con FormBuilder y nonNullable
+- `/admin/productos/nuevo` crea un producto y `/admin/productos/:id/editar` lo edita (hay que entrar como `admin`)
+- cada campo muestra un mensaje por regla solo despues de tocarlo
+- al guardar con errores se ven todos de una vez y la pantalla baja al primero
+- el boton dice "Guardando..." mientras guarda y si falla sale el error sin borrar lo escrito
+- en edicion el codigo sale bloqueado pero igual se envia con `getRawValue()`
+- si sales con cambios sin guardar te avisa
+- `/registro` revisa que las claves sean iguales y que el correo no este registrado en la API
+- el correo se revisa al salir del campo y no con cada letra
+- los validadores propios estan en `src/app/validators/`

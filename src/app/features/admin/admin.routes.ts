@@ -7,10 +7,10 @@ import { FormularioProductoComponent } from './formulario-producto/formulario-pr
 
 
 export const ADMIN_ROUTES: Routes = [
-  { path: '', component: AdminLayoutComponent, children: [
-    { path: 'usuarios', component: AdminUsuariosComponent },
-    { path: 'productos', component: AdminProductosComponent, canDeactivate: [cambiosSinGuardarGuard]},
+  {path: '', component: AdminLayoutComponent, children: [
+    {path: 'usuarios', component: AdminUsuariosComponent },
+    {path: 'productos', component: AdminProductosComponent, canDeactivate: [cambiosSinGuardarGuard]},
     {path: 'productos/nuevo', component: FormularioProductoComponent, title: 'Nuevo producto'},
-    { path: 'productos/:id/editar', component: FormularioProductoComponent, title: 'Editar producto', canDeactivate: [cambiosSinGuardarGuard] },
+    {path: 'productos/:id/editar', component: FormularioProductoComponent, title: 'Editar producto', canDeactivate: [cambiosSinGuardarGuard] },
   ]},
 ];

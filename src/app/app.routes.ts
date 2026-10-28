@@ -4,7 +4,7 @@ import { LoginPageComponent } from "./features/login-page/login-page.component"
 import { NoEncontradoComponent } from "./features/no-encontrado/no-encontrado.component"
 import { authGuard } from "./guards/auth.guard"
 import { adminGuard } from "./guards/admin.guard"
-
+import { RegistroComponent } from "./features/registro/registro.component"
 
 export const routes: Routes = [
     {path: '', redirectTo: 'productos', pathMatch: 'full' },
@@ -13,5 +13,6 @@ export const routes: Routes = [
     {path: 'productos/:id', title: 'Detalles del producto', loadComponent:() => import('./features/detalle-producto/detalle-producto.component').then(m => m.DetalleProductoComponent),},
     {path: 'carrito', title: 'Mi carrito', canActivate: [authGuard], loadComponent: () => import('./features/carrito-page/carrito-page.component').then(m => m.CarritoPageComponent),},
     {path: 'admin', title:'Admin', canMatch: [adminGuard], loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES),},
+    {path: 'registro', component: RegistroComponent, title: 'Registro' },
     {path: '**', component: NoEncontradoComponent, title: 'Pagina no encontrada'},
 ]
